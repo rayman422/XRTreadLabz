@@ -1,0 +1,23 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "attr-quotes": "error",
+    "doctype-style": "error",
+    "heading-level": "error",
+    "no-inline-style": "warn",
+    "prefer-native-element": "error",
+    "require-sri": "off",
+    "script-type": "error",
+    "svg-focusable": "error",
+    "void-style": "error",
+    "wcag/h30": "error",
+    "wcag/h32": "error",
+    "wcag/h36": "error",
+    "wcag/h37": "error",
+    "wcag/h67": "error",
+    "wcag/h71": "error"
+  },
+  "elements": [
+    "html5"
+  ]
+}

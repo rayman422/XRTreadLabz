@@ -4,15 +4,24 @@
   "description": "A modern, responsive website for XRTreadLabz - cutting-edge VR fitness experience",
   "main": "index.html",
   "scripts": {
-    "start": "python3 -m http.server 8000",
-    "serve": "python3 -m http.server 8000",
-    "dev": "python3 -m http.server 8000",
-    "build": "echo 'No build process required for static site'",
-    "lint:html": "echo 'HTML validation - consider using html-validate for production'",
-    "lint:css": "echo 'CSS validation - consider using stylelint for production'",
-    "lint:js": "echo 'JS validation - consider using eslint for production'",
-    "optimize": "echo 'Consider using tools like imagemin, cssnano, and terser for production'",
-    "deploy": "echo 'Ready for deployment to any static hosting service'"
+    "start": "npx serve dist -p 8000",
+    "dev": "npx live-server --port=8000 --open=index.html",
+    "build": "npm run clean && npm run copy-files && npm run optimize",
+    "clean": "rm -rf dist && mkdir -p dist",
+    "copy-files": "cp -r *.html *.css *.js dist/",
+    "optimize": "npm run minify-css && npm run minify-js && npm run optimize-html",
+    "minify-css": "npx cleancss-cli -o dist/styles.min.css dist/styles.css",
+    "minify-js": "npx terser dist/script.js -o dist/script.min.js --compress --mangle",
+    "optimize-html": "npx html-minifier-terser --input-dir dist --output-dir dist --file-ext html --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "lint:html": "npx html-validate dist/*.html",
+    "lint:css": "npx stylelint dist/*.css",
+    "lint:js": "npx eslint dist/*.js",
+    "test": "npm run lint && npm run build",
+    "deploy": "npm run build && npm run deploy:gh-pages",
+    "deploy:gh-pages": "npx gh-pages -d dist",
+    "security-check": "npm audit",
+    "performance-check": "npx lighthouse http://localhost:8000 --output=json --output-path=./lighthouse-report.json"
   },
   "keywords": [
     "VR",
@@ -37,13 +46,26 @@
     "url": "https://github.com/yourusername/xrtreadlabz/issues"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not dead",
+    "not ie 11"
   ],
-  "devDependencies": {},
-  "dependencies": {}
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "eslint": "^8.57.0",
+    "gh-pages": "^6.1.1",
+    "html-minifier-terser": "^7.2.0",
+    "html-validate": "^8.9.1",
+    "lighthouse": "^12.7.1",
+    "live-server": "^1.2.0",
+    "serve": "^14.2.1",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0",
+    "terser": "^5.27.0"
+  }
 }
