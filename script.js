@@ -1,17 +1,21 @@
 // Mobile Navigation Toggle
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a nav link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+    }
 });
-
-// Close mobile menu when clicking on a nav link
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-}));
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -27,16 +31,33 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar background on scroll
-window.addEventListener('scroll', () => {
+// Performance optimization: debounce scroll events
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Combined scroll handler for better performance
+const handleScroll = debounce(() => {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.backdropFilter = 'blur(10px)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+    if (navbar) {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
     }
-});
+    
+    // Active section highlighting
+    highlightActiveSection();
+}, 10);
 
 // Intersection Observer for animations
 const observerOptions = {
@@ -59,44 +80,58 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Contact Form Handling
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(contactForm);
-        const formObject = {};
-        formData.forEach((value, key) => {
-            formObject[key] = value;
-        });
-        
-        // Show loading state
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        submitButton.textContent = 'Sending...';
-        submitButton.disabled = true;
-        
-        try {
-            // Simulate form submission (replace with actual API call)
-            await new Promise(resolve => setTimeout(resolve, 2000));
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            // Show success message
-            showNotification('Thank you! Your message has been sent successfully.', 'success');
-            contactForm.reset();
-        } catch (error) {
-            // Show error message
-            showNotification('Sorry, there was an error sending your message. Please try again.', 'error');
-        } finally {
-            // Reset button state
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-        }
-    });
-}
+            // Validate form before submission
+            if (!validateContactForm(contactForm)) {
+                showNotification('Please correct the errors in the form.', 'error');
+                return;
+            }
+            
+            const formData = new FormData(contactForm);
+            const formObject = {};
+            formData.forEach((value, key) => {
+                formObject[key] = value;
+            });
+            
+            // Show loading state
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            try {
+                // Simulate form submission (replace with actual API call)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Show success message
+                showNotification('Thank you! Your message has been sent successfully.', 'success');
+                contactForm.reset();
+                
+                // Clear any field errors
+                contactForm.querySelectorAll('[required]').forEach(field => {
+                    clearFieldError(field);
+                });
+            } catch (error) {
+                // Show error message
+                showNotification('Sorry, there was an error sending your message. Please try again.', 'error');
+            } finally {
+                // Reset button state
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }
+        });
+    }
+});
 
 // Newsletter Form Handling
-const newsletterForms = document.querySelectorAll('.newsletter-form');
-newsletterForms.forEach(form => {
+document.addEventListener('DOMContentLoaded', () => {
+    const newsletterForms = document.querySelectorAll('.newsletter-form');
+    newsletterForms.forEach(form => {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -129,6 +164,7 @@ newsletterForms.forEach(form => {
             submitButton.textContent = originalText;
             submitButton.disabled = false;
         }
+    });
     });
 });
 
@@ -226,30 +262,8 @@ function addLoadingAnimation() {
 // Initialize loading animations
 document.addEventListener('DOMContentLoaded', addLoadingAnimation);
 
-// Performance optimization: debounce scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Optimized scroll handler
-const optimizedScrollHandler = debounce(() => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-}, 10);
-
-window.addEventListener('scroll', optimizedScrollHandler);
+// Initialize scroll handler
+window.addEventListener('scroll', handleScroll);
 
 // Add scrolled class styles
 const style = document.createElement('style');
@@ -271,18 +285,49 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Preload critical resources
+// Preload critical resources with fallbacks
 function preloadCriticalResources() {
     const criticalResources = [
-        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+        {
+            url: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
+            fallback: () => {
+                // Add fallback font stack if Google Fonts fails
+                const fallbackStyle = document.createElement('style');
+                fallbackStyle.textContent = `
+                    body, * {
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+                    }
+                `;
+                document.head.appendChild(fallbackStyle);
+            }
+        },
+        {
+            url: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
+            fallback: () => {
+                // Add basic icon fallbacks if Font Awesome fails
+                const fallbackStyle = document.createElement('style');
+                fallbackStyle.textContent = `
+                    .fas, .fab {
+                        font-style: normal;
+                        font-weight: bold;
+                    }
+                    .fa-infinity::before { content: '∞'; }
+                    .fa-shield-alt::before { content: '🛡'; }
+                    .fa-chart-line::before { content: '📈'; }
+                    .fa-running::before { content: '🏃'; }
+                    .fa-users::before { content: '👥'; }
+                    .fa-graduation-cap::before { content: '🎓'; }
+                `;
+                document.head.appendChild(fallbackStyle);
+            }
+        }
     ];
     
     criticalResources.forEach(resource => {
         const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'style';
-        link.href = resource;
+        link.rel = 'stylesheet';
+        link.href = resource.url;
+        link.onerror = resource.fallback;
         document.head.appendChild(link);
     });
 }
@@ -353,9 +398,7 @@ function highlightActiveSection() {
     });
 }
 
-// Optimized active section highlighting
-const optimizedHighlightHandler = debounce(highlightActiveSection, 50);
-window.addEventListener('scroll', optimizedHighlightHandler);
+// Active section highlighting is now handled in the combined scroll handler
 
 // Add active nav link styles
 const navStyle = document.createElement('style');
