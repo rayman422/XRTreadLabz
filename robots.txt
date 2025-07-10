@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://yourdomain.com/sitemap.xml
+
+# Block access to admin/development files
+Disallow: /dist/
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /node_modules/
+Disallow: /*.json
+Disallow: /*.md
+Disallow: /*.yml
+Disallow: /*.yaml
+Disallow: /*.conf
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1

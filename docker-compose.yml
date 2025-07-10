@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  xrtreadlabz:
+    build: .
+    container_name: xrtreadlabz-web
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - ./logs:/var/log/nginx
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.xrtreadlabz.rule=Host(`yourdomain.com`)"
+      - "traefik.http.routers.xrtreadlabz.entrypoints=websecure"
+      - "traefik.http.routers.xrtreadlabz.tls.certresolver=letsencrypt"
+      - "traefik.http.services.xrtreadlabz.loadbalancer.server.port=80"
+    networks:
+      - web
+
+  # Optional: Add a reverse proxy for SSL termination
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=admin@yourdomain.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
+    restart: unless-stopped
+    networks:
+      - web
+
+volumes:
+  letsencrypt:
+
+networks:
+  web:
+    external: true

@@ -449,4 +449,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-console.log('XRTreadLabz website initialized successfully!');
+// Production ready - debug logging removed
