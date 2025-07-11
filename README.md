@@ -1,230 +1,212 @@
-# XRTreadLabz
+# CodeFlow AI - AI-Powered Development Platform
 
-A modern, responsive website for XRTreadLabz - a cutting-edge VR fitness experience that combines virtual reality technology with advanced treadmill systems.
+A modern, responsive website inspired by zencoder.ai that showcases an AI coding assistant platform with strategically placed advertisements that don't interfere with the user experience.
 
-## 🌟 Features
+## 🚀 Features
 
-- **Modern Design**: Clean, professional interface with smooth animations
-- **Responsive Layout**: Optimized for all devices (desktop, tablet, mobile)
-- **Interactive Elements**: Dynamic navigation, form validation, and user feedback
-- **Performance Optimized**: Fast loading with optimized assets and debounced events
-- **Accessibility**: Semantic HTML and keyboard navigation support
-- **Cross-browser Compatible**: Works on all modern browsers
+### Core Website Features
+- **Modern Design**: Clean, developer-focused interface with dark theme
+- **Responsive Layout**: Fully responsive design that works on all devices
+- **Interactive Elements**: Smooth animations, hover effects, and transitions
+- **Code Animation**: Animated code typing effect in the hero section
+- **Gradient Text**: Animated gradient text effects
+- **Performance Optimized**: Lazy loading, efficient animations, and optimized assets
 
-## 🏗️ Project Structure
+### Strategic Ad Placement
+- **Top Banner Ads**: Non-intrusive banner ads at the top of the page
+- **Sidebar Ads**: Vertical ads on desktop that don't interfere with content
+- **In-content Ads**: Strategically placed ads between content sections
+- **Inline Feature Ads**: Sponsored content cards within the features grid
+- **Bottom Banner Ads**: Footer-area banner advertisements
+- **Mobile Optimization**: Ads automatically adjust for mobile devices
+
+### Advanced JavaScript Features
+- **Ad Management System**: Automatic ad rotation and click tracking
+- **Smooth Scrolling**: Enhanced navigation with smooth scrolling
+- **Intersection Observer**: Efficient scroll-based animations
+- **Analytics Tracking**: Built-in analytics for user interactions
+- **Performance Monitoring**: Optimized scroll and animation performance
+- **Accessibility Features**: Keyboard navigation and focus indicators
+- **PWA Support**: Service worker registration for offline capabilities
+
+## 🛠️ Tech Stack
+
+- **HTML5**: Semantic markup with accessibility features
+- **CSS3**: Modern CSS with Grid, Flexbox, and animations
+- **JavaScript (ES6+)**: Modern JavaScript with classes and modules
+- **Inter Font**: Professional typography from Google Fonts
+- **Responsive Design**: Mobile-first approach with breakpoints
+
+## 📁 Project Structure
 
 ```
-XRTreadLabz/
+codeflow-ai/
 ├── index.html          # Main HTML file
-├── styles.css          # CSS styles and responsive design
-├── script.js           # JavaScript functionality and interactions
-├── README.md           # Project documentation
-└── .github/            # GitHub workflows and configurations
-    └── workflows/
-        ├── manual.yml
-        ├── stale.yml
-        └── summary.yml
+├── styles.css          # All CSS styles and animations
+├── script.js           # JavaScript functionality
+├── README.md          # Project documentation
+└── assets/            # Images and other assets (if any)
 ```
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- Local web server (optional but recommended)
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd XRTreadLabz
-   ```
-
-2. Open the website:
-   - **Option 1**: Open `index.html` directly in your browser
-   - **Option 2**: Use a local web server (recommended):
-     ```bash
-     # Using Python 3
-     python -m http.server 8000
-     
-     # Using Node.js (if you have it installed)
-     npx serve .
-     
-     # Using PHP
-     php -S localhost:8000
-     ```
-
-3. Visit `http://localhost:8000` in your browser
-
-## 📱 Sections
-
-### 🏠 Home (Hero Section)
-- Eye-catching hero with animated VR treadmill mockup
-- Call-to-action buttons for booking and learning more
-- Responsive typography and layout
-
-### ℹ️ About
-- Company information and mission
-- Key features with icons
-- Statistics and achievements
-- Responsive grid layout
-
-### 🛠️ Services
-- Three main service offerings:
-  - Personal Training
-  - Group Sessions
-  - Training Programs
-- Interactive service cards with hover effects
-
-### 🔬 Technology
-- Technical specifications
-- Feature highlights
-- Equipment details
-- Modern card-based layout
-
-### 📞 Contact
-- Contact information
-- Interactive contact form with validation
-- Real-time form feedback
-- Newsletter subscription
 
 ## 🎨 Design Features
 
 ### Color Scheme
-- Primary: `#6366f1` (Indigo)
-- Secondary: `#06b6d4` (Cyan)
-- Accent: `#8b5cf6` (Purple)
-- Success: `#10b981` (Emerald)
-- Error: `#ef4444` (Red)
+- Primary: Dark blue/slate theme (#0f172a, #1e293b, #334155)
+- Accent: Purple/blue gradients (#6366f1, #8b5cf6, #ec4899)
+- Text: Light grays (#e2e8f0, #94a3b8, #cbd5e1)
 
 ### Typography
-- Font Family: Inter (Google Fonts)
-- Responsive font sizes
-- Optimized line heights and spacing
+- **Primary Font**: Inter (Google Fonts)
+- **Code Font**: Fira Code (monospace)
+- **Font Weights**: 300, 400, 500, 600, 700
 
-### Animations
-- Smooth scroll behavior
-- Fade-in animations on scroll
-- Hover effects on interactive elements
-- Loading animations and transitions
+### Components
+- **Navigation**: Fixed header with smooth scrolling
+- **Hero Section**: Animated code preview and call-to-action
+- **Features Grid**: Interactive cards with hover effects
+- **Testimonials**: Customer testimonial cards
+- **Pricing**: Three-tier pricing plans with featured option
+- **Footer**: Comprehensive footer with links and information
 
-## 💻 Technical Implementation
+## � Setup Instructions
 
-### HTML
-- Semantic HTML5 structure
-- Accessibility attributes
-- SEO-optimized meta tags
-- Responsive viewport configuration
+### Prerequisites
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Local web server (optional, for development)
 
-### CSS
-- CSS Custom Properties (variables)
-- Flexbox and Grid layouts
-- Mobile-first responsive design
-- Modern CSS features (backdrop-filter, custom properties)
-- Optimized for performance
+### Installation
 
-### JavaScript
-- Modern ES6+ features
-- Event delegation and optimization
-- Intersection Observer API for animations
-- Form validation and handling
-- Performance optimization with debouncing
-- Error handling and user feedback
+1. **Clone or Download**: Get the project files
+2. **Open in Browser**: Simply open `index.html` in your web browser
+3. **Local Development**: For development, use a local server:
+
+```bash
+# Using Python
+python -m http.server 8000
+
+# Using Node.js (http-server)
+npx http-server
+
+# Using PHP
+php -S localhost:8000
+```
+
+4. **Access**: Navigate to `http://localhost:8000` in your browser
 
 ## 📱 Responsive Breakpoints
 
-- **Desktop**: 1200px and up
+- **Desktop**: 1200px and above
 - **Tablet**: 768px - 1199px
-- **Mobile**: 320px - 767px
+- **Mobile**: 767px and below
+- **Small Mobile**: 480px and below
 
-## 🛡️ Browser Support
+## 🎯 Ad Placement Strategy
 
-- Chrome 88+
-- Firefox 85+
-- Safari 14+
-- Edge 88+
+### Non-Intrusive Advertising
+The website implements a carefully designed ad system that:
+- **Doesn't block content**: Ads are positioned to complement, not obstruct
+- **Maintains user experience**: Smooth scrolling and navigation remain intact
+- **Responsive design**: Ads adapt to different screen sizes
+- **Performance optimized**: Ads don't impact page load times
 
-## 🚀 Performance Optimizations
+### Ad Types
+1. **Banner Ads**: 728x90 (desktop) / 320x50 (mobile)
+2. **Sidebar Ads**: 120x600 (desktop only)
+3. **In-content Ads**: 728x90 horizontal placement
+4. **Sponsored Content**: Native advertising within content grid
 
-- Optimized images and assets
-- Minified and compressed code
-- Lazy loading for animations
-- Debounced scroll events
-- Preloading of critical resources
-- Efficient DOM manipulation
+## 🚀 Performance Features
 
-## 🔧 Customization
+### Optimization Techniques
+- **Lazy Loading**: Images load as they enter the viewport
+- **Efficient Animations**: CSS transforms and GPU acceleration
+- **Debounced Scroll**: Optimized scroll event handling
+- **Intersection Observer**: Efficient visibility detection
+- **Minified Assets**: Optimized CSS and JavaScript
+
+### SEO Features
+- **Semantic HTML**: Proper heading hierarchy and structure
+- **Meta Tags**: Comprehensive meta information
+- **Accessibility**: ARIA labels and keyboard navigation
+- **Fast Loading**: Optimized for Core Web Vitals
+
+## � Browser Compatibility
+
+- **Chrome**: 70+
+- **Firefox**: 65+
+- **Safari**: 12+
+- **Edge**: 79+
+- **Mobile**: iOS 12+, Android 8+
+
+## 🎨 Customization
 
 ### Colors
-Modify the CSS custom properties in `styles.css`:
+Edit the CSS custom properties in `styles.css`:
 ```css
 :root {
     --primary-color: #6366f1;
-    --secondary-color: #06b6d4;
-    /* ... other variables ... */
+    --secondary-color: #8b5cf6;
+    --accent-color: #ec4899;
+    /* ... */
 }
 ```
 
 ### Content
-Update the content in `index.html` to match your specific business needs.
+- Edit `index.html` to change text content
+- Modify `script.js` to adjust interactive behaviors
+- Update `styles.css` for design changes
 
-### Styling
-Modify `styles.css` to customize the appearance and layout.
-
-### Functionality
-Extend `script.js` to add new interactive features.
-
-## 📧 Form Integration
-
-The contact form is currently set up with client-side validation. To integrate with a backend service:
-
-1. Replace the form submission simulation in `script.js`
-2. Add your API endpoint
-3. Configure server-side validation
-4. Set up email delivery service
-
-Example integration:
+### Ads
+Configure ads in `script.js`:
 ```javascript
-// Replace the simulation in script.js
-const response = await fetch('/api/contact', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formObject)
-});
+this.ads = [
+    {
+        type: 'banner',
+        content: 'Your Ad Content',
+        url: 'https://your-link.com',
+        bgColor: '#your-color'
+    }
+];
 ```
 
-## 🔮 Future Enhancements
+## 📊 Analytics
 
-- [ ] Backend API integration
-- [ ] Content Management System (CMS)
-- [ ] Multi-language support
-- [ ] Advanced animations and micro-interactions
-- [ ] PWA (Progressive Web App) features
-- [ ] Analytics integration
-- [ ] SEO optimization
-- [ ] A/B testing framework
+The website includes built-in analytics tracking:
+- **Page Views**: Track visitor sessions
+- **Button Clicks**: Monitor CTA interactions
+- **Section Views**: Measure content engagement
+- **Ad Interactions**: Track ad performance
+
+Access analytics data in the browser console:
+```javascript
+analytics.getEvents() // View all tracked events
+```
+
+## � Development
+
+### Adding New Features
+1. **HTML**: Add new sections in `index.html`
+2. **CSS**: Style new elements in `styles.css`
+3. **JavaScript**: Add functionality in `script.js`
+
+### Best Practices
+- Maintain mobile-first responsive design
+- Keep accessibility in mind
+- Test ad placements for user experience
+- Optimize for performance
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is created for educational and demonstration purposes. Feel free to use and modify for your own projects.
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Contributions are welcome! Please feel free to submit issues and enhancement requests.
 
 ## 📞 Support
 
-For support and questions, please contact:
-- Email: info@xrtreadlabz.com
-- Phone: +1 (555) 123-4567
+For questions or support, please open an issue in the project repository.
 
 ---
 
-**XRTreadLabz** - Step Into the Future of Fitness
+**Built with ❤️ for developers who want to create modern, user-friendly websites with strategic advertising placement.**
