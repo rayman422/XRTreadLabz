@@ -425,3 +425,329 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 console.log('XRTreadLabz website initialized successfully!');
+
+// Loading Screen Management
+window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                loadingScreen.remove();
+            }, 500);
+        }, 1500);
+    }
+});
+
+// Dark Mode Toggle
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', currentTheme);
+
+// Update theme toggle icon
+function updateThemeIcon(theme) {
+    const icon = themeToggle.querySelector('i');
+    if (theme === 'dark') {
+        icon.className = 'fas fa-sun';
+    } else {
+        icon.className = 'fas fa-moon';
+    }
+}
+
+updateThemeIcon(currentTheme);
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+});
+
+// FAQ Accordion Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Close all FAQ items
+            faqItems.forEach(faqItem => {
+                faqItem.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+});
+
+// Scroll Progress Indicator
+function updateScrollProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    
+    document.documentElement.style.setProperty('--scroll-width', `${scrollPercent}%`);
+}
+
+window.addEventListener('scroll', debounce(updateScrollProgress, 10));
+
+// Add scroll progress bar to page
+document.addEventListener('DOMContentLoaded', () => {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+});
+
+// PWA Installation Prompt
+let deferredPrompt;
+let installPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstallPrompt();
+});
+
+function showInstallPrompt() {
+    if (installPrompt) return;
+    
+    installPrompt = document.createElement('div');
+    installPrompt.className = 'install-prompt';
+    installPrompt.innerHTML = `
+        <div>
+            <strong>Install XRTreadLabz</strong>
+            <p>Get quick access to our VR fitness experience!</p>
+        </div>
+        <button id="installBtn">Install</button>
+        <button class="close-btn" id="closePrompt">&times;</button>
+    `;
+    
+    document.body.appendChild(installPrompt);
+    
+    setTimeout(() => {
+        installPrompt.classList.add('show');
+    }, 2000);
+    
+    // Install button click
+    document.getElementById('installBtn').addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const result = await deferredPrompt.userChoice;
+            if (result.outcome === 'accepted') {
+                hideInstallPrompt();
+            }
+            deferredPrompt = null;
+        }
+    });
+    
+    // Close button click
+    document.getElementById('closePrompt').addEventListener('click', hideInstallPrompt);
+}
+
+function hideInstallPrompt() {
+    if (installPrompt) {
+        installPrompt.classList.remove('show');
+        setTimeout(() => {
+            installPrompt.remove();
+            installPrompt = null;
+        }, 300);
+    }
+}
+
+// Enhanced Pricing Card Interactions
+document.addEventListener('DOMContentLoaded', () => {
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    
+    pricingCards.forEach(card => {
+        const button = card.querySelector('.pricing-btn');
+        
+        button.addEventListener('click', () => {
+            const planName = card.querySelector('h3').textContent;
+            const price = card.querySelector('.amount').textContent;
+            
+            showNotification(`You selected the ${planName} plan ($${price}). Redirecting to booking...`, 'success');
+            
+            // Simulate redirect to booking system
+            setTimeout(() => {
+                // In a real app, this would redirect to a booking page
+                console.log(`Booking ${planName} plan`);
+            }, 2000);
+        });
+    });
+});
+
+// Enhanced Testimonials Carousel (optional)
+document.addEventListener('DOMContentLoaded', () => {
+    const testimonials = document.querySelectorAll('.testimonial-card');
+    let currentTestimonial = 0;
+    
+    function showTestimonial(index) {
+        testimonials.forEach((testimonial, i) => {
+            if (i === index) {
+                testimonial.style.transform = 'scale(1.05)';
+                testimonial.style.zIndex = '10';
+            } else {
+                testimonial.style.transform = 'scale(1)';
+                testimonial.style.zIndex = '1';
+            }
+        });
+    }
+    
+    // Auto-rotate testimonials every 5 seconds
+    setInterval(() => {
+        currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+        showTestimonial(currentTestimonial);
+    }, 5000);
+});
+
+// Enhanced Contact Form with more validation
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Enhanced validation
+        if (!validateContactForm(contactForm)) {
+            showNotification('Please fill in all required fields correctly.', 'error');
+            return;
+        }
+        
+        const formData = new FormData(contactForm);
+        const formObject = {};
+        formData.forEach((value, key) => {
+            formObject[key] = value;
+        });
+        
+        // Show loading state
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
+        
+        try {
+            // Simulate form submission with enhanced feedback
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Show success message with more details
+            showNotification(`Thank you ${formObject.name}! We'll contact you within 24 hours about your ${formObject.service} inquiry.`, 'success');
+            contactForm.reset();
+            
+            // Clear any field errors
+            const fieldErrors = contactForm.querySelectorAll('.field-error');
+            fieldErrors.forEach(error => error.remove());
+            
+        } catch (error) {
+            showNotification('Sorry, there was an error sending your message. Please try again or call us directly.', 'error');
+        } finally {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }
+    });
+}
+
+// Service Worker Registration for PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+                console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
+
+// Enhanced Mobile Navigation with gesture support
+let touchStartY = 0;
+let touchEndY = 0;
+
+document.addEventListener('touchstart', (e) => {
+    touchStartY = e.changedTouches[0].screenY;
+});
+
+document.addEventListener('touchend', (e) => {
+    touchEndY = e.changedTouches[0].screenY;
+    handleGesture();
+});
+
+function handleGesture() {
+    const swipeThreshold = 100;
+    const diff = touchStartY - touchEndY;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            // Swipe up - could hide mobile menu if open
+            if (navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        }
+    }
+}
+
+// Enhanced Animation Triggers
+const enhancedObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const element = entry.target;
+            
+            // Add different animation classes based on element type
+            if (element.classList.contains('pricing-card')) {
+                element.classList.add('fade-in');
+                // Stagger animation for pricing cards
+                const index = Array.from(element.parentNode.children).indexOf(element);
+                element.style.animationDelay = `${index * 0.2}s`;
+            } else if (element.classList.contains('testimonial-card')) {
+                element.classList.add('slide-left');
+            } else if (element.classList.contains('faq-item')) {
+                element.classList.add('slide-right');
+            } else {
+                element.classList.add('fade-in');
+            }
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+// Observe new elements
+document.addEventListener('DOMContentLoaded', () => {
+    const newElements = document.querySelectorAll('.pricing-card, .testimonial-card, .faq-item');
+    newElements.forEach(el => enhancedObserver.observe(el));
+});
+
+// Enhanced Error Handling
+window.addEventListener('error', (e) => {
+    console.error('Global error:', e.error);
+    // Could send error reports to analytics service
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+    console.error('Unhandled promise rejection:', e.reason);
+    // Could send error reports to analytics service
+});
+
+// Performance Monitoring
+if ('navigation' in window.performance) {
+    window.addEventListener('load', () => {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        const loadTime = navigation.loadEventEnd - navigation.loadEventStart;
+        console.log('Page load time:', loadTime);
+        
+        // Could send performance metrics to analytics
+        if (loadTime > 3000) {
+            console.warn('Page load time is slow:', loadTime);
+        }
+    });
+}
+
+console.log('Enhanced XRTreadLabz website initialized successfully!');
