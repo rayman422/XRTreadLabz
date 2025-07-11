@@ -27,16 +27,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar background on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.backdropFilter = 'blur(10px)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-    }
-});
+// Navbar background on scroll - handled by optimized scroll handler below
 
 // Intersection Observer for animations
 const observerOptions = {
@@ -251,14 +242,9 @@ const optimizedScrollHandler = debounce(() => {
 
 window.addEventListener('scroll', optimizedScrollHandler);
 
-// Add scrolled class styles
+// Add notification styles
 const style = document.createElement('style');
 style.textContent = `
-    .navbar.scrolled {
-        background: rgba(255, 255, 255, 0.98) !important;
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    }
-    
     .notification-content {
         display: flex;
         align-items: center;
@@ -357,18 +343,7 @@ function highlightActiveSection() {
 const optimizedHighlightHandler = debounce(highlightActiveSection, 50);
 window.addEventListener('scroll', optimizedHighlightHandler);
 
-// Add active nav link styles
-const navStyle = document.createElement('style');
-navStyle.textContent = `
-    .nav-link.active {
-        color: var(--primary-color) !important;
-    }
-    
-    .nav-link.active::after {
-        width: 100% !important;
-    }
-`;
-document.head.appendChild(navStyle);
+// Active nav link styles are handled in CSS
 
 // Error handling for missing elements
 function safeQuerySelector(selector) {
